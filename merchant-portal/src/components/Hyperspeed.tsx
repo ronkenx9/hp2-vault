@@ -396,7 +396,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }: { effectOptions?
                 const options = this.options;
                 const curve = new THREE.LineCurve3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1));
                 const geometry = new THREE.TubeGeometry(curve, 40, 1, 8, false);
-                const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
+                const instanced = new THREE.InstancedBufferGeometry().copy(geometry as any);
                 instanced.instanceCount = options.lightPairsPerRoadWay * 2;
                 const laneWidth = options.roadWidth / options.lanesPerRoad;
                 const aOffset: number[] = [], aMetrics: number[] = [], aColor: number[] = [];
@@ -449,7 +449,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }: { effectOptions?
             init() {
                 const options = this.options;
                 const geometry = new THREE.PlaneGeometry(1, 1);
-                const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
+                const instanced = new THREE.InstancedBufferGeometry().copy(geometry as any);
                 const totalSticks = options.totalSideLightSticks;
                 instanced.instanceCount = totalSticks;
                 const stickoffset = options.length / (totalSticks - 1);
@@ -598,7 +598,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }: { effectOptions?
             initPasses() {
                 this.renderPass = new RenderPass(this.scene, this.camera);
                 this.bloomPass = new EffectPass(this.camera, new BloomEffect({ luminanceThreshold: 0.2, luminanceSmoothing: 0, resolutionScale: 1 }));
-                const smaaPass = new EffectPass(this.camera, new SMAAEffect({ preset: SMAAPreset.MEDIUM, searchImage: SMAAEffect.searchImageDataURL, areaImage: SMAAEffect.areaImageDataURL }));
+                const smaaPass = new EffectPass(this.camera, new SMAAEffect({ preset: SMAAPreset.MEDIUM } as any));
                 this.renderPass.renderToScreen = false;
                 this.bloomPass.renderToScreen = false;
                 smaaPass.renderToScreen = true;
