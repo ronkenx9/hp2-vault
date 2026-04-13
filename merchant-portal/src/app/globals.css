@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #D4A017;
+  --primary-glow: rgba(212, 160, 23, 0.35);
+  --secondary: #4A9EFF;
+  --background: #080810;
+  --surface: #0c0c14;
+  --panel: rgba(12, 12, 20, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.04);
+  --accent: #3DB87A;
+}
+
+@layer base {
+  body {
+    @apply bg-[#080810] text-[#d4d4d4];
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(212, 160, 23, 0.25);
+    color: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: 'DM Serif Display', serif;
+    @apply font-normal tracking-tight;
+  }
+
+  .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}
+
+@layer components {
+  .cyber-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cyber-panel {
+    @apply bg-black/50 backdrop-blur-xl border border-white/[0.04] rounded-none relative overflow-hidden;
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
+  }
+
+  .cyber-panel::before {
+    content: "";
+    @apply absolute top-0 left-0 w-[2px] h-full transition-all duration-500;
+    background: var(--primary);
+    opacity: 0.15;
+  }
+
+  .cyber-panel:hover::before {
+    opacity: 1;
+  }
+
+  .cyber-button {
+    @apply relative px-6 py-2 bg-transparent border border-white/10 text-white font-mono text-xs uppercase tracking-[0.2em] transition-all duration-300 active:scale-95 overflow-hidden;
+  }
+
+  .cyber-button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-glow);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 40px var(--primary-glow);
+  }
+}
+
+/* Scrollbar — hidden like EQUALIZER */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+@keyframes pulse-soft {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

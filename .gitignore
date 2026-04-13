@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.next/
+dist/
+build/
+cache/
+
+# Artifacts & Temporary Files
+artifacts/
+*.log
+.DS_Store
+
+# Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+keys/
+*.pem
+
+# Hardhat
+typechain/
+typechain-types/
+coverage/
+coverage.json
+/cache/
+/artifacts/
+
+# Testing
+tests/artifacts/
