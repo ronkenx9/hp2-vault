@@ -1,42 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createVerify } from 'crypto';
 
 /**
  * HashKey HSP Payment Webhook Handler
  * HashKey will POST to this endpoint with payment result events.
- * 
- * Expected payload shape (per HSP docs):
- * {
- *   merchant_order_id: string,
- *   payment_id: string,
- *   status: "SUCCESS" | "FAILED" | "PENDING",
- *   amount: string,
- *   currency: string,
- *   timestamp: number,
- *   signature: string   // ES256K JWT – verify in production!
- * }
  */
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
+        const signature = req.headers.get('x-hsp-signature'); // HSP specific signature header
 
-        // Log the event (in production, write to DB or queue)
+        // Log the event
         console.log('[HSP Webhook] Received event:', JSON.stringify(body, null, 2));
 
-        const { merchant_order_id, payment_id, status } = body;
+        // --- M-3 FIX: Signature verification ---
+        const PUBLIC_KEY = process.env.HSP_PUBLIC_KEY;
 
-        // --- Signature verification goes here in production ---
-        // import { createVerify } from 'crypto';
-        // verify signature using the HSP public key
+        if (PUBLIC_KEY) {
+            const verifier = createVerify('sha256');
+            verifier.update(JSON.stringify(body));
+            const isValid = verifier.verify(PUBLIC_KEY, signature || '', 'base64');
+
+            if (!isValid) {
+                console.error('[HSP Webhook] INVALID SIGNATURE. Dropping request.');
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+        } else {
+            console.warn('[HSP Webhook] Running without HSP_PUBLIC_KEY. Skipping verification.');
+        }
+
+        const { merchant_order_id, status } = body;
 
         switch (status) {
             case 'SUCCESS':
-                console.log(`[HSP Webhook] Payment SUCCESS for order ${merchant_order_id} (txId: ${payment_id})`);
+                console.log(`[HSP Webhook] Payment SUCCESS for order ${merchant_order_id}`);
                 // TODO: release escrow / mark order as paid
                 break;
 
             case 'FAILED':
                 console.log(`[HSP Webhook] Payment FAILED for order ${merchant_order_id}`);
-                // TODO: refund buyer, notify merchant
+                // TODO: notify merchant / manage cleanup
                 break;
 
             case 'PENDING':

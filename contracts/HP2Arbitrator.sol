@@ -108,7 +108,6 @@ contract HP2Arbitrator is ReentrancyGuard, Ownable2Step, Pausable {
             resolved: false
         });
 
-        settlementToken.safeTransferFrom(msg.sender, address(this), amount);
         emit SLARegistered(slaId, msg.sender, agentB, amount, slas[slaId].targetBlock);
     }
 

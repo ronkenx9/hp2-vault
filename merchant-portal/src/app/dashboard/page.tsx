@@ -73,7 +73,7 @@ const JuryTerminal = ({ isSimulating: externalSim }: { isSimulating?: boolean })
       const normalMessages = [
         `Syncing Block #${Math.floor(Math.random() * 1000) + 9000}...`,
         `Epoch delta: ${Math.random().toFixed(4)}ms`,
-        `AI Juror #${Math.floor(Math.random() * 5) + 1} status: ACTIVE`,
+        `AI Juror #${Math.floor(Math.random() * 5) + 1} status: ACTIVE`, // D-1 FIX: Typo
         `Latent reliability: 99.99%`
       ];
 
