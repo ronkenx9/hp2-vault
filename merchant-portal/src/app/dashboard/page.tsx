@@ -349,7 +349,10 @@ export default function MerchantConsole() {
                           )}>
                             {demoVault.status}
                           </div>
-                          <span className="text-[10px] text-accent font-bold">+$ {demoVault.yieldAccrued.toFixed(4)}</span>
+                          <div className="flex flex-col items-end">
+                            <p className="text-[7px] font-mono text-accent uppercase tracking-widest">[HOLD TO ACCELERATE]</p>
+                            <span className="text-[10px] text-accent font-bold">+$ {demoVault.yieldAccrued.toFixed(4)}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -385,7 +388,10 @@ export default function MerchantConsole() {
                           )}>
                             {vault.status}
                           </div>
-                          <span className="text-[10px] text-accent font-bold">+$ {Number(vault.yieldAccrued).toFixed(4)}</span>
+                          <div className="flex flex-col items-end">
+                            <p className="text-[7px] font-mono text-accent uppercase tracking-widest">[HOLD TO ACCELERATE]</p>
+                            <span className="text-[10px] text-accent font-bold">+$ {Number(vault.yieldAccrued).toFixed(4)}</span>
+                          </div>
                         </div>
                         <div className="ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
                           <ArrowUpRight className="w-4 h-4 text-slate-400" />

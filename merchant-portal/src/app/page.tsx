@@ -68,7 +68,8 @@ export default function LandingPage() {
 
                     {/* Subtext */}
                     <p className="mt-8 text-base text-white/35 max-w-md leading-relaxed font-light">
-                        Hold to accelerate. HP2-Vault locks merchant capital in yield-generating escrow
+                        <span className="text-[#D4A017] font-mono text-[10px] tracking-widest uppercase mr-2">[Hold to Accelerate]</span>
+                        HP2-Vault locks merchant capital in yield-generating escrow
                         while an autonomous AI jury resolves disputes through on-chain consensus.
                     </p>
 
@@ -79,7 +80,7 @@ export default function LandingPage() {
                             <ArrowUpRight className="w-3.5 h-3.5 text-white/30 group-hover:text-[#D4A017] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </Link>
                         <a href="#" className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/25 hover:text-white/60 transition-colors">
-                            Read Whitepaper →
+                            Ecosystem Narrative →
                         </a>
                     </div>
                 </div>
