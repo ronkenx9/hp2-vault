@@ -40,6 +40,12 @@ module.exports = {
       gasPrice: "auto",
       timeout: 120000,
     },
+    hashkey_testnet: {
+      url: "https://testnet.hsk.xyz",
+      chainId: 133,
+      accounts: [PRIVATE_KEY],
+      gasPrice: "auto",
+    },
     hardhat: {
       chainId: 31337,
     },

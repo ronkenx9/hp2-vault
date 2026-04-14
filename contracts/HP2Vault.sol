@@ -78,7 +78,7 @@ contract HP2Vault is ReentrancyGuard, Ownable2Step, Pausable {
         if (_arbitrator == address(0)) revert ZeroAddress();
         if (_initialYieldRate > MAX_YIELD_RATE) revert YieldRateTooHigh();
         
-        arbitrator = VerdictCore(_arbitrator);
+        arbitrator = HP2Arbitrator(_arbitrator);
         baseYieldRate = _initialYieldRate;
     }
 
