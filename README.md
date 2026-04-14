@@ -1,7 +1,7 @@
 # HP2-Vault: The First PayFi Escrow Protocol
 ### HashKey Horizon Hackathon | PayFi Track
 
-![HP2-Vault Logo](file:///C:/Users/HP%20OMEN%2015%20GAMING/.gemini/antigravity/brain/670f665d-5615-4032-b6e7-1bc5cc531d67/hp2_vault_logo_1776131190981.png)
+![HP2-Vault Logo](C:\Users\HP OMEN 15 GAMING\.gemini\antigravity\brain\670f665d-5615-4032-b6e7-1bc5cc531d67\hp2_vault_logo_minimalist_1776131446713.png)
 
 > **"Hold to Accelerate."**
 
