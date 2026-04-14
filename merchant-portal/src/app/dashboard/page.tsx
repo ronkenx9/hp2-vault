@@ -162,7 +162,10 @@ export default function MerchantConsole() {
     setDemoVault((prev: any) => ({ ...prev, status: "released", yieldAccrued: 1.4582 }));
     setSimLog((prev: string[]) => [...prev, "[VERDICT] 5/5 Consensus: Merchant performance verified.", "[SYSTEM] Funds + Accrued Yield released."]);
 
-    setTimeout(() => setIsSimulating(false), 5000);
+    setTimeout(() => {
+      setIsSimulating(false);
+      setDemoVault(null); // D-2 FIX: clean up demo vault after simulation ends
+    }, 5000);
   };
 
   if (!mounted) return null;
@@ -219,7 +222,7 @@ export default function MerchantConsole() {
           />
           <CyberStat
             title="Accrued Ecosystem Yield"
-            value={`+$${(stats?.ecosystemYield || 12450.21).toLocaleString()}`}
+            value={`+$${(stats?.ecosystemYield || 12450.21).toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
             subtext={`${(yieldRate || 8.5).toFixed(1)}% Real-time APY`}
             icon={TrendingUp}
             glow

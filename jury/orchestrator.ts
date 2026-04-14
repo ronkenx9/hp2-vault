@@ -59,6 +59,7 @@ export class AIJuryOrchestrator {
         const signersIndices: number[] = [];
 
         for (let i = 0; i < deliberations.length; i++) {
+            if (i >= this.jurorKeys.length) continue; // M-2 FIX: bounds check
             if (deliberations[i].decision === majorityDecision) {
                 const sig = await JurySigner.signVerdict(
                     this.jurorKeys[i],

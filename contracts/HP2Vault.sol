@@ -178,12 +178,17 @@ contract HP2Vault is ReentrancyGuard, Ownable2Step, Pausable {
         if (!windowExpired && !juryApproved) revert NotReadyForRelease();
 
         // C-2 FIX: Cache before delete
+        address token = vault.token;
         uint256 principal = vault.principal;
+        address merchant = vault.merchant;
         uint256 yieldAmount = getAccruedYield(cartId);
 
         delete _vaults[cartId];
 
-        emit SettlementTriggered(cartId, msg.sender, principal, yieldAmount);
+        // C-1 FIX: Actually transfer principal + yield to merchant
+        IERC20(token).safeTransfer(merchant, principal + yieldAmount);
+
+        emit SettlementTriggered(cartId, merchant, principal, yieldAmount);
     }
 
     /**
@@ -204,11 +209,16 @@ contract HP2Vault is ReentrancyGuard, Ownable2Step, Pausable {
         if (status != HP2Arbitrator.VerdictStatus.RESOLVED_SLASHED) revert NotSlashed();
 
         // C-2 FIX: Cache before delete
+        address token = vault.token;
         uint256 principal = vault.principal;
+        address buyer = vault.buyer;
 
         delete _vaults[cartId];
 
-        emit RefundTriggered(cartId, msg.sender, principal);
+        // C-1 FIX: Actually transfer principal back to buyer
+        IERC20(token).safeTransfer(buyer, principal);
+
+        emit RefundTriggered(cartId, buyer, principal);
     }
 
     // ─── Admin ───────────────────────────────────────────────────
