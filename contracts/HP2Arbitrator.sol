@@ -161,10 +161,9 @@ contract HP2Arbitrator is ReentrancyGuard, Ownable2Step, Pausable {
         sla.verdict = decision;
         sla.resolved = true;
 
-        address recipient = (decision == VerdictStatus.RESOLVED_STANDARD) ? sla.agentA : sla.agentB;
-        settlementToken.safeTransfer(recipient, sla.collateral);
-
-        emit VerdictExecuted(slaId, decision, recipient);
+        // RC-1 FIX: Arbitrator is a pure state machine — no fund transfers.
+        // The HP2Vault contract reads the verdict and handles its own settlements.
+        emit VerdictExecuted(slaId, decision, (decision == VerdictStatus.RESOLVED_STANDARD) ? sla.agentA : sla.agentB);
     }
 
     // ─── Admin ───────────────────────────────────────────────────

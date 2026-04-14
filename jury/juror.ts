@@ -54,12 +54,23 @@ export class AIJuror {
             });
 
             const data = await response.json();
-            const result = JSON.parse(data.choices[0].message.content);
+
+            // NM-1 FIX: Validate LLM response before parsing
+            const raw = data?.choices?.[0]?.message?.content;
+            if (!raw) throw new Error(`Juror ${this.jurorId}: Empty response from LLM`);
+
+            let result;
+            try { result = JSON.parse(raw); }
+            catch { throw new Error(`Juror ${this.jurorId}: Invalid JSON from LLM: ${raw.slice(0, 100)}`); }
+
+            if (result.decision !== 2 && result.decision !== 3) {
+                throw new Error(`Juror ${this.jurorId}: Invalid decision value: ${result.decision}`);
+            }
 
             return {
                 jurorId: this.jurorId,
                 decision: result.decision as VerdictDecision,
-                reasoning: result.reasoning
+                reasoning: result.reasoning || "No reasoning provided"
             };
         } catch (error: any) {
             console.error(`[Juror ${this.jurorId}] Error:`, error.message);
